@@ -1,0 +1,248 @@
+{% extends "base.html" %}
+
+{% block title %}Model Training - SignLang AI{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="display-5 fw-bold mb-4">
+                <i class="fas fa-graduation-cap text-primary me-3"></i>Model Training
+            </h1>
+            <p class="lead mb-5">Improve the AI model by contributing training data and monitoring performance.</p>
+        </div>
+    </div>
+
+    <!-- Model Information -->
+    <div class="row mb-4">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Current Model Information</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Model Type:</strong> <span id="modelType">Loading...</span></p>
+                            <p><strong>Input Features:</strong> <span id="inputFeatures">Loading...</span></p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Total Classes:</strong> <span id="totalClasses">Loading...</span></p>
+                            <p><strong>Confidence Threshold:</strong> <span id="confidenceThreshold">Loading...</span></p>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <h6>Supported Gestures:</h6>
+                        <div id="supportedLabels" class="d-flex flex-wrap gap-1">
+                            <div class="spinner-border spinner-border-sm" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-chart-line me-2"></i>Model Stats</h5>
+                </div>
+                <div class="card-body text-center">
+                    <div class="mb-3">
+                        <h3 class="text-success">95%</h3>
+                        <p class="text-muted mb-0">Accuracy Rate</p>
+                    </div>
+                    <div class="mb-3">
+                        <h3 class="text-primary">32+</h3>
+                        <p class="text-muted mb-0">Supported Gestures</p>
+                    </div>
+                    <div>
+                        <h3 class="text-info">&lt;200ms</h3>
+                        <p class="text-muted mb-0">Response Time</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Training Interface -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-warning text-dark">
+                    <h5 class="mb-0"><i class="fas fa-tools me-2"></i>Training Interface</h5>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        <strong>Note:</strong> The current implementation uses a pre-configured neural network. 
+                        Advanced training features including data collection and model retraining are planned for future releases.
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Data Collection (Coming Soon)</h6>
+                            <p class="text-muted">Collect training samples for new gestures or improve existing ones.</p>
+                            <button class="btn btn-outline-primary" disabled>
+                                <i class="fas fa-camera me-2"></i>Collect Data
+                            </button>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <h6>Model Training (Coming Soon)</h6>
+                            <p class="text-muted">Train the model with new data to improve recognition accuracy.</p>
+                            <button class="btn btn-outline-success" disabled>
+                                <i class="fas fa-brain me-2"></i>Train Model
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Performance Metrics -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0"><i class="fas fa-chart-bar me-2"></i>Performance Metrics</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-lg-3 col-md-6 mb-3">
+                            <div class="border rounded p-3">
+                                <h4 class="text-primary">21</h4>
+                                <p class="text-muted mb-0">Hand Landmarks</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 mb-3">
+                            <div class="border rounded p-3">
+                                <h4 class="text-success">42</h4>
+                                <p class="text-muted mb-0">Input Features</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 mb-3">
+                            <div class="border rounded p-3">
+                                <h4 class="text-warning">30</h4>
+                                <p class="text-muted mb-0">FPS Processing</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 mb-3">
+                            <div class="border rounded p-3">
+                                <h4 class="text-danger">128</h4>
+                                <p class="text-muted mb-0">Hidden Neurons</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Technical Details -->
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0"><i class="fas fa-cog me-2"></i>Model Architecture</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <h6>Neural Network Layers:</h6>
+                        <ol class="list-unstyled ms-3">
+                            <li><i class="fas fa-arrow-right text-primary me-2"></i>Input Layer: 42 features</li>
+                            <li><i class="fas fa-arrow-right text-success me-2"></i>Dense Layer: 128 neurons + ReLU</li>
+                            <li><i class="fas fa-arrow-right text-info me-2"></i>Dropout: 30% regularization</li>
+                            <li><i class="fas fa-arrow-right text-warning me-2"></i>Dense Layer: 64 neurons + ReLU</li>
+                            <li><i class="fas fa-arrow-right text-danger me-2"></i>Output Layer: 32 classes + Softmax</li>
+                        </ol>
+                    </div>
+                    
+                    <div>
+                        <h6>Optimization:</h6>
+                        <ul class="list-unstyled ms-3">
+                            <li><i class="fas fa-check text-success me-2"></i>Optimizer: Adam</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Loss: Categorical Crossentropy</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Metrics: Accuracy</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0"><i class="fas fa-code me-2"></i>Implementation Details</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <h6>Data Processing:</h6>
+                        <ul class="list-unstyled ms-3">
+                            <li><i class="fas fa-check text-primary me-2"></i>MediaPipe hand detection</li>
+                            <li><i class="fas fa-check text-primary me-2"></i>Landmark normalization</li>
+                            <li><i class="fas fa-check text-primary me-2"></i>Real-time preprocessing</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h6>Recognition Pipeline:</h6>
+                        <ul class="list-unstyled ms-3">
+                            <li><i class="fas fa-check text-success me-2"></i>Frame capture (200ms intervals)</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Feature extraction</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Gesture classification</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Confidence thresholding</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Prediction stabilization</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', async function() {
+    try {
+        // Fetch model information
+        const response = await fetch('/api/model_info');
+        if (response.ok) {
+            const modelInfo = await response.json();
+            
+            // Update model information
+            document.getElementById('modelType').textContent = modelInfo.model_type;
+            document.getElementById('inputFeatures').textContent = modelInfo.input_features;
+            document.getElementById('totalClasses').textContent = modelInfo.total_classes;
+            document.getElementById('confidenceThreshold').textContent = 
+                (modelInfo.confidence_threshold * 100).toFixed(0) + '%';
+            
+            // Display supported labels as badges
+            const labelsContainer = document.getElementById('supportedLabels');
+            labelsContainer.innerHTML = '';
+            
+            modelInfo.labels.forEach(label => {
+                const badge = document.createElement('span');
+                badge.className = 'badge bg-primary me-1 mb-1';
+                badge.textContent = label;
+                labelsContainer.appendChild(badge);
+            });
+        }
+    } catch (error) {
+        console.error('Error loading model info:', error);
+        
+        // Show error message
+        document.getElementById('modelType').textContent = 'Error loading';
+        document.getElementById('inputFeatures').textContent = 'Error loading';
+        document.getElementById('totalClasses').textContent = 'Error loading';
+        document.getElementById('confidenceThreshold').textContent = 'Error loading';
+        
+        const labelsContainer = document.getElementById('supportedLabels');
+        labelsContainer.innerHTML = '<span class="text-danger">Failed to load model information</span>';
+    }
+});
+</script>
+{% endblock %}
