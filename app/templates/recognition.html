@@ -1,0 +1,232 @@
+{% extends "base.html" %}
+
+{% block title %}Real-time Recognition - SignLang AI{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+        <!-- Video Section -->
+        <div class="col-lg-8">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-camera me-2"></i>Live Camera Feed
+                    </h5>
+                </div>
+                <div class="card-body text-center">
+                    <div id="videoContainer" class="position-relative">
+                        <video id="videoElement" width="640" height="480" autoplay muted class="border rounded"></video>
+                        <canvas id="canvasElement" width="640" height="480" style="display: none;"></canvas>
+                        
+                        <!-- Overlay for status -->
+                        <div id="statusOverlay" class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-dark bg-opacity-50 text-white">
+                            <div class="text-center">
+                                <i class="fas fa-video-slash fa-3x mb-3"></i>
+                                <h4>Camera Not Started</h4>
+                                <p>Click "Start Camera" to begin recognition</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-3">
+                        <button id="startCamera" class="btn btn-success me-2">
+                            <i class="fas fa-play me-2"></i>Start Camera
+                        </button>
+                        <button id="stopCamera" class="btn btn-danger me-2" disabled>
+                            <i class="fas fa-stop me-2"></i>Stop Camera
+                        </button>
+                        <button id="toggleRecognition" class="btn btn-primary me-2" disabled>
+                            <i class="fas fa-brain me-2"></i>Start Recognition
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Controls and Output Section -->
+        <div class="col-lg-4">
+            <!-- Current Gesture -->
+            <div class="card shadow-sm mb-3">
+                <div class="card-header bg-success text-white">
+                    <h6 class="mb-0">
+                        <i class="fas fa-hand-paper me-2"></i>Current Gesture
+                    </h6>
+                </div>
+                <div class="card-body text-center">
+                    <div id="currentGesture" class="display-6 fw-bold text-success">
+                        --
+                    </div>
+                    <div id="confidence" class="text-muted">
+                        Confidence: 0%
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Accumulated Text -->
+            <div class="card shadow-sm mb-3">
+                <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+                    <h6 class="mb-0">
+                        <i class="fas fa-text-width me-2"></i>Recognized Text
+                    </h6>
+                    <button id="clearText" class="btn btn-sm btn-outline-light">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div id="accumulatedText" class="form-control" style="min-height: 100px; background-color: #f8f9fa;">
+                        Start making gestures to see text appear here...
+                    </div>
+                    <div class="mt-2">
+                        <button id="speakText" class="btn btn-primary btn-sm w-100">
+                            <i class="fas fa-volume-up me-2"></i>Speak Text
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Settings -->
+            <div class="card shadow-sm mb-3">
+                <div class="card-header bg-secondary text-white">
+                    <h6 class="mb-0">
+                        <i class="fas fa-cog me-2"></i>Settings
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="confidenceThreshold" class="form-label">
+                            Confidence Threshold: <span id="thresholdValue">70%</span>
+                        </label>
+                        <input type="range" class="form-range" id="confidenceThreshold" 
+                               min="50" max="95" value="70">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="speechRate" class="form-label">
+                            Speech Rate: <span id="rateValue">150</span> WPM
+                        </label>
+                        <input type="range" class="form-range" id="speechRate" 
+                               min="100" max="300" value="150">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="speechVolume" class="form-label">
+                            Speech Volume: <span id="volumeValue">90%</span>
+                        </label>
+                        <input type="range" class="form-range" id="speechVolume" 
+                               min="0" max="100" value="90">
+                    </div>
+                    
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="autoSpeak" checked>
+                        <label class="form-check-label" for="autoSpeak">
+                            Auto-speak gestures
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Statistics -->
+            <div class="card shadow-sm">
+                <div class="card-header bg-warning text-dark">
+                    <h6 class="mb-0">
+                        <i class="fas fa-chart-bar me-2"></i>Session Stats
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-6">
+                            <div class="h5 mb-0" id="gestureCount">0</div>
+                            <small class="text-muted">Gestures</small>
+                        </div>
+                        <div class="col-6">
+                            <div class="h5 mb-0" id="sessionTime">00:00</div>
+                            <small class="text-muted">Duration</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Loading Modal -->
+<div class="modal fade" id="loadingModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center py-4">
+                <div class="spinner-border text-primary mb-3" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <h5>Initializing AI Model...</h5>
+                <p class="text-muted mb-0">Please wait while we load the recognition system.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_head %}
+<style>
+    #videoElement {
+        max-width: 100%;
+        height: auto;
+    }
+    
+    #videoContainer {
+        display: inline-block;
+        background-color: #000;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    
+    .card {
+        border-radius: 10px;
+    }
+    
+    .card-header {
+        border-radius: 10px 10px 0 0 !important;
+    }
+    
+    #currentGesture {
+        min-height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .form-range::-webkit-slider-thumb {
+        background: #0d6efd;
+    }
+    
+    .form-range::-moz-range-thumb {
+        background: #0d6efd;
+        border: none;
+    }
+    
+    #accumulatedText {
+        resize: none;
+        border: none;
+        outline: none;
+    }
+    
+    .recognition-active {
+        animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+        0% {
+            box-shadow: 0 0 0 0 rgba(13, 110, 253, 0.7);
+        }
+        70% {
+            box-shadow: 0 0 0 10px rgba(13, 110, 253, 0);
+        }
+        100% {
+            box-shadow: 0 0 0 0 rgba(13, 110, 253, 0);
+        }
+    }
+</style>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/recognition.js') }}"></script>
+{% endblock %}

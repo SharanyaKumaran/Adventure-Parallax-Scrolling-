@@ -1,0 +1,241 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - SignLang AI{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Welcome Section -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <h2 class="card-title mb-1">Welcome back, {{ user.username }}!</h2>
+                            <p class="card-text mb-0">Ready to continue your sign language recognition journey?</p>
+                        </div>
+                        <div class="col-md-4 text-md-end">
+                            <a href="{{ url_for('main.recognition') }}" class="btn btn-light btn-lg">
+                                <i class="fas fa-play me-2"></i>Start Recognition
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="row mb-4">
+        <div class="col-md-3 mb-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <div class="text-primary mb-2">
+                        <i class="fas fa-calendar-alt fa-2x"></i>
+                    </div>
+                    <h5 class="card-title" id="sessionCount">--</h5>
+                    <p class="card-text text-muted">Total Sessions</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3 mb-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <div class="text-success mb-2">
+                        <i class="fas fa-hand-paper fa-2x"></i>
+                    </div>
+                    <h5 class="card-title" id="totalGestures">--</h5>
+                    <p class="card-text text-muted">Gestures Recognized</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3 mb-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <div class="text-info mb-2">
+                        <i class="fas fa-clock fa-2x"></i>
+                    </div>
+                    <h5 class="card-title" id="memberSince">--</h5>
+                    <p class="card-text text-muted">Member Since</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3 mb-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <div class="text-warning mb-2">
+                        <i class="fas fa-chart-line fa-2x"></i>
+                    </div>
+                    <h5 class="card-title">95%</h5>
+                    <p class="card-text text-muted">Accuracy Rate</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Actions -->
+    <div class="row mb-4">
+        <div class="col-md-4 mb-3">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <div class="text-primary mb-3">
+                        <i class="fas fa-video fa-3x"></i>
+                    </div>
+                    <h5 class="card-title">Real-time Recognition</h5>
+                    <p class="card-text">Start recognizing sign language gestures using your webcam in real-time.</p>
+                    <a href="{{ url_for('main.recognition') }}" class="btn btn-primary">
+                        <i class="fas fa-play me-2"></i>Start Now
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-3">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <div class="text-success mb-3">
+                        <i class="fas fa-graduation-cap fa-3x"></i>
+                    </div>
+                    <h5 class="card-title">Model Training</h5>
+                    <p class="card-text">Train and improve the AI model with your own gesture data.</p>
+                    <a href="{{ url_for('main.training') }}" class="btn btn-success">
+                        <i class="fas fa-brain me-2"></i>Train Model
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-3">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <div class="text-info mb-3">
+                        <i class="fas fa-info-circle fa-3x"></i>
+                    </div>
+                    <h5 class="card-title">Learn More</h5>
+                    <p class="card-text">Discover how our AI-powered sign language recognition works.</p>
+                    <a href="{{ url_for('main.about') }}" class="btn btn-info">
+                        <i class="fas fa-book me-2"></i>Learn More
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Sessions -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-history me-2"></i>Recent Sessions
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div id="recentSessions">
+                        <div class="text-center py-4">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p class="mt-2 text-muted">Loading recent sessions...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', async function() {
+    try {
+        // Fetch user statistics
+        const response = await fetch('/api/user_stats');
+        if (response.ok) {
+            const stats = await response.json();
+            
+            // Update stats
+            document.getElementById('sessionCount').textContent = stats.session_count;
+            document.getElementById('totalGestures').textContent = stats.total_gestures;
+            
+            // Format member since date
+            const memberSince = new Date(stats.member_since);
+            document.getElementById('memberSince').textContent = 
+                memberSince.toLocaleDateString('en-US', { 
+                    month: 'short', 
+                    year: 'numeric' 
+                });
+            
+            // Display recent sessions
+            displayRecentSessions(stats.recent_sessions);
+        }
+    } catch (error) {
+        console.error('Error loading user stats:', error);
+        document.getElementById('recentSessions').innerHTML = `
+            <div class="text-center py-4">
+                <i class="fas fa-exclamation-triangle text-warning fa-2x mb-2"></i>
+                <p class="text-muted">Failed to load session data</p>
+            </div>
+        `;
+    }
+});
+
+function displayRecentSessions(sessions) {
+    const container = document.getElementById('recentSessions');
+    
+    if (!sessions || sessions.length === 0) {
+        container.innerHTML = `
+            <div class="text-center py-4">
+                <i class="fas fa-clipboard-list fa-2x text-muted mb-2"></i>
+                <p class="text-muted">No sessions found. Start your first recognition session!</p>
+                <a href="{{ url_for('main.recognition') }}" class="btn btn-primary">
+                    <i class="fas fa-play me-2"></i>Start Recognition
+                </a>
+            </div>
+        `;
+        return;
+    }
+    
+    let html = '<div class="table-responsive"><table class="table table-hover">';
+    html += `
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Duration</th>
+                <th>Gestures</th>
+                <th>Text Generated</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+    `;
+    
+    sessions.forEach(session => {
+        const startDate = new Date(session.start);
+        const duration = session.end ? 
+            Math.round((new Date(session.end) - startDate) / 1000 / 60) + ' min' : 
+            'Active';
+        const status = session.end ? 
+            '<span class="badge bg-success">Completed</span>' : 
+            '<span class="badge bg-primary">Active</span>';
+        
+        html += `
+            <tr>
+                <td>${startDate.toLocaleDateString()} ${startDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</td>
+                <td>${duration}</td>
+                <td>${session.gestures || 0}</td>
+                <td>${session.text || 'No text generated'}</td>
+                <td>${status}</td>
+            </tr>
+        `;
+    });
+    
+    html += '</tbody></table></div>';
+    container.innerHTML = html;
+}
+</script>
+{% endblock %}

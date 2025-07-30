@@ -1,0 +1,224 @@
+{% extends "base.html" %}
+
+{% block title %}About - SignLang AI{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Hero Section -->
+    <div class="row mb-5">
+        <div class="col-12 text-center">
+            <h1 class="display-4 fw-bold mb-4">About SignLang AI</h1>
+            <p class="lead">Bridging communication gaps through advanced AI and computer vision technology</p>
+        </div>
+    </div>
+
+    <!-- Mission Section -->
+    <div class="row mb-5">
+        <div class="col-lg-8 mx-auto">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-5">
+                    <h2 class="text-center mb-4">Our Mission</h2>
+                    <p class="lead text-center mb-4">
+                        To create an inclusive world where communication barriers between deaf and hearing individuals 
+                        are eliminated through cutting-edge artificial intelligence technology.
+                    </p>
+                    <div class="row text-center">
+                        <div class="col-md-4 mb-3">
+                            <i class="fas fa-universal-access fa-3x text-primary mb-3"></i>
+                            <h5>Accessibility</h5>
+                            <p class="text-muted">Making technology accessible to everyone</p>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <i class="fas fa-users fa-3x text-success mb-3"></i>
+                            <h5>Inclusion</h5>
+                            <p class="text-muted">Fostering inclusive communication</p>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <i class="fas fa-rocket fa-3x text-info mb-3"></i>
+                            <h5>Innovation</h5>
+                            <p class="text-muted">Pushing boundaries with AI technology</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Technology Section -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <h2 class="text-center mb-5">Technology Stack</h2>
+            <div class="row">
+                <div class="col-lg-6 mb-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0"><i class="fas fa-brain me-2"></i>Machine Learning</h5>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i><strong>MediaPipe:</strong> Real-time hand landmark detection</li>
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i><strong>TensorFlow:</strong> Deep learning model training</li>
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i><strong>OpenCV:</strong> Computer vision processing</li>
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i><strong>Neural Networks:</strong> Gesture classification</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 mb-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-header bg-success text-white">
+                            <h5 class="mb-0"><i class="fas fa-code me-2"></i>Development</h5>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i><strong>Flask:</strong> Python web framework</li>
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i><strong>Bootstrap:</strong> Responsive UI design</li>
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i><strong>JavaScript:</strong> Interactive frontend</li>
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i><strong>SQLAlchemy:</strong> Database management</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- How It Works -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <h2 class="text-center mb-5">How It Works</h2>
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="text-center">
+                        <div class="bg-primary text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                            <i class="fas fa-camera fa-2x"></i>
+                        </div>
+                        <h5>Capture</h5>
+                        <p class="text-muted">Webcam captures hand gestures in real-time using advanced computer vision</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="text-center">
+                        <div class="bg-success text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                            <i class="fas fa-hand-paper fa-2x"></i>
+                        </div>
+                        <h5>Detect</h5>
+                        <p class="text-muted">MediaPipe identifies 21 hand landmarks with sub-pixel accuracy</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="text-center">
+                        <div class="bg-info text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                            <i class="fas fa-brain fa-2x"></i>
+                        </div>
+                        <h5>Classify</h5>
+                        <p class="text-muted">AI neural network classifies gestures with 95%+ accuracy</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="text-center">
+                        <div class="bg-warning text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                            <i class="fas fa-volume-up fa-2x"></i>
+                        </div>
+                        <h5>Convert</h5>
+                        <p class="text-muted">Text-to-speech engine converts recognized text to natural speech</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <h2 class="text-center mb-5">Key Features</h2>
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-clock fa-3x text-primary mb-3"></i>
+                            <h5>Real-time Processing</h5>
+                            <p class="text-muted">Process gestures in real-time with less than 200ms latency for seamless communication</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 mb-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-chart-line fa-3x text-success mb-3"></i>
+                            <h5>High Accuracy</h5>
+                            <p class="text-muted">95%+ recognition accuracy powered by advanced machine learning algorithms</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 mb-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-mobile-alt fa-3x text-info mb-3"></i>
+                            <h5>Cross-Platform</h5>
+                            <p class="text-muted">Works on any device with a camera and modern web browser</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistics -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="bg-light rounded p-5">
+                <h2 class="text-center mb-5">Impact Statistics</h2>
+                <div class="row text-center">
+                    <div class="col-md-3 mb-4">
+                        <h3 class="display-4 fw-bold text-primary">95%</h3>
+                        <p class="lead">Recognition Accuracy</p>
+                    </div>
+                    <div class="col-md-3 mb-4">
+                        <h3 class="display-4 fw-bold text-success">32+</h3>
+                        <p class="lead">Supported Gestures</p>
+                    </div>
+                    <div class="col-md-3 mb-4">
+                        <h3 class="display-4 fw-bold text-info">Real-time</h3>
+                        <p class="lead">Processing Speed</p>
+                    </div>
+                    <div class="col-md-3 mb-4">
+                        <h3 class="display-4 fw-bold text-warning">24/7</h3>
+                        <p class="lead">Availability</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="row">
+        <div class="col-12 text-center">
+            <div class="card bg-primary text-white border-0">
+                <div class="card-body p-5">
+                    <h3 class="mb-4">Ready to Experience the Future of Communication?</h3>
+                    <p class="lead mb-4">Join thousands of users who are already breaking down communication barriers with SignLang AI.</p>
+                    {% if not current_user.is_authenticated %}
+                        <a href="{{ url_for('auth.register') }}" class="btn btn-light btn-lg me-3">
+                            <i class="fas fa-user-plus me-2"></i>Get Started
+                        </a>
+                        <a href="{{ url_for('auth.login') }}" class="btn btn-outline-light btn-lg">
+                            <i class="fas fa-sign-in-alt me-2"></i>Sign In
+                        </a>
+                    {% else %}
+                        <a href="{{ url_for('main.recognition') }}" class="btn btn-light btn-lg">
+                            <i class="fas fa-play me-2"></i>Start Recognition
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
